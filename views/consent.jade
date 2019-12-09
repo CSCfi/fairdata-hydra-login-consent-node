@@ -12,14 +12,65 @@ block content
         p.
             Hi #{user}, application <strong>#{client.client_name || client.client_id}</strong> wants access resources on your behalf and to:
 
+        div
+            label(for=CSCUserName) CSCUserName
+            input(type="text", id=CSCUserName, value=user_data.CSCUserName, name="CSCUserName")
+        div
+            label(for=given_name) given_name
+            input(type="text", id=given_name, value=user_data.given_name, name="given_name")
+        div
+            label(for=family_name) family_name
+            input(type="text", id=family_name, value=user_data.family_name, name="family_name")
+        div
+            label(for=name) name
+            input(type="text", id=name, value=user_data.name, name="name")
+        div
+            label(for=email) email
+            input(type="text", id=email, value=user_data.email, name="email")
+
+        div
+            label(for=email_verified) email_verified
+            input(type="checkbox", id=email_verified, value=user_data.email_verified, name="email_verified")
+
+        div
+            label(for=audience) audience
+            input(type="text", id=audience, value=user_data.audience, name="audience")
+            input(type="text", id=audience, value=user_data.audience, name="audience")
+            input(type="text", id=audience, value=user_data.audience, name="audience")
+            input(type="text", id=audience, value=user_data.audience, name="audience")
+            input(type="text", id=audience, value=user_data.audience, name="audience")
+            input(type="text", id=audience, value=user_data.audience, name="audience")
+
+        div
+            label(for=group_names) group_names
+            input(type="text", id=group_names, value=user_data.group_names, name="group_names")
+            input(type="text", id=group_names, value=user_data.group_names, name="group_names")
+            input(type="text", id=group_names, value=user_data.group_names, name="group_names")
+            input(type="text", id=group_names, value=user_data.group_names, name="group_names")
+            input(type="text", id=group_names, value=user_data.group_names, name="group_names")
+            input(type="text", id=group_names, value=user_data.group_names, name="group_names")
+
+        div
+            label(for=eppn) eppn
+            input(type="text", id=eppn, value=user_data.eppn, name="eppn")
+
+        div
+            label(for=schacHomeOrganization) schacHomeOrganization
+            input(type="text", id=schacHomeOrganization, value=user_data.schacHomeOrganization, name="schacHomeOrganization")
+
+        div
+            label(for=schacHomeOrganizationType) schacHomeOrganizationType
+            input(type="text", id=schacHomeOrganizationType, value=user_data.schacHomeOrganizationType, name="schacHomeOrganizationType")
+
+        div
+            label(for=Subject) Subject
+            input(type="text", id=Subject, value=user_data.Subject, name="Subject")
+
         each scope in requested_scope
             input(type="checkbox",id=scope,value=scope,name="grant_scope")
             label(for=scope) #{scope}
             br
 
-        p.
-            Do you want to be asked next time when this application wants to access your data? The application will
-            not be able to ask for more permissions without your consent.
         ul
             if client.policy_uri
                 li
@@ -27,9 +78,7 @@ block content
             if client.tos_uri
                 li
                     a(href=client.tos_uri) Terms of Service
-        p
-            input(type="checkbox",id="remember",name="remember",value="1")
-            label(for="remember") Do not ask me again
+
         p
             input(type="submit",id="accept",name="submit",value="Allow access")
             input(type="submit",id="reject",name="submit",value="Deny access")

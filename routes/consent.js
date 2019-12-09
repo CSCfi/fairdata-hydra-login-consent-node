@@ -14,6 +14,21 @@ router.get('/', csrfProtection, function (req, res, next) {
   // The challenge is used to fetch information about the consent request from ORY Hydra.
   var challenge = query.consent_challenge;
 
+  var user_data = {
+    CSCUserName: "testaaja",
+    given_name: "Teppo",
+    family_name: "Testikäyttäjä",
+    name: "teppo",
+    email: "teppohaka@mailinator.com",
+    email_verified: true,
+    audience: [],
+    group_names: [],
+    eppn: "teppo@yliopisto.fi",
+    schacHomeOrganization: "yliopisto.fi",
+    schacHomeOrganizationType: "urn:schac:homeOrganizationType:fi:university",
+    Subject: "teppo@fairdataid",
+  };
+
   hydra.getConsentRequest(challenge)
   // This will be called if the HTTP request was successful
     .then(function (response) {
@@ -35,10 +50,9 @@ router.get('/', csrfProtection, function (req, res, next) {
           session: {
             // This data will be available when introspecting the token. Try to avoid sensitive information here,
             // unless you limit who can introspect tokens.
-            // access_token: { foo: 'bar' },
-
+            access_token: user_data,
             // This data will be available in the ID token.
-            // id_token: { baz: 'bar' },
+            id_token: user_data
           }
         }).then(function (response) {
           // All we need to do now is to redirect the user back to hydra!
@@ -55,6 +69,7 @@ router.get('/', csrfProtection, function (req, res, next) {
         requested_scope: response.requested_scope,
         user: response.subject,
         client: response.client,
+        user_data: user_data
       });
     })
     // This will handle any error that happens when making HTTP calls to hydra
@@ -89,6 +104,21 @@ router.post('/', csrfProtection, function (req, res, next) {
     grant_scope = [grant_scope]
   }
 
+  var user_data = {
+    CSCUserName: req.body.CSCUserName,
+    given_name: req.body.given_name,
+    family_name: req.body.family_name,
+    name: req.body.name,
+    email: req.body.email,
+    email_verified: req.body.email_verified,
+    audience: req.body.audience,
+    group_names: req.body.group_names,
+    eppn: req.body.eppn,
+    schacHomeOrganization: req.body.schacHomeOrganization,
+    schacHomeOrganizationType: req.body.schacHomeOrganizationType,
+    Subject: req.body.Subject,
+  };
+
   // Seems like the user authenticated! Let's tell hydra...
   hydra.getConsentRequest(challenge)
   // This will be called if the HTTP request was successful
@@ -102,10 +132,10 @@ router.post('/', csrfProtection, function (req, res, next) {
         session: {
           // This data will be available when introspecting the token. Try to avoid sensitive information here,
           // unless you limit who can introspect tokens.
-          // access_token: { foo: 'bar' },
-
+          access_token: user_data,
           // This data will be available in the ID token.
           // id_token: { baz: 'bar' },
+          id_token: user_data
         },
 
         // ORY Hydra checks if requested audiences are allowed by the client, so we can simply echo this.
@@ -113,10 +143,10 @@ router.post('/', csrfProtection, function (req, res, next) {
 
         // This tells hydra to remember this consent request and allow the same client to request the same
         // scopes from the same user, without showing the UI, in the future.
-        remember: Boolean(req.body.remember),
+        //remember: Boolean(req.body.remember),
 
         // When this "remember" sesion expires, in seconds. Set this to 0 so it will never expire.
-        remember_for: 3600,
+        //remember_for: 3600,
       })
         .then(function (response) {
           // All we need to do now is to redirect the user back to hydra!
