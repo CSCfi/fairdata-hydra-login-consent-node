@@ -38,6 +38,7 @@ router.get('/', csrfProtection, function (req, res, next) {
       res.render('login', {
         csrfToken: req.csrfToken(),
         challenge: challenge,
+        title: "local-dev-auth - Login",
       });
     })
     // This will handle any error that happens when making HTTP calls to hydra
@@ -59,7 +60,7 @@ router.post('/', csrfProtection, function (req, res, next) {
       csrfToken: req.csrfToken(),
 
       challenge: challenge,
-
+      title: "local-dev-auth - Login - Error",
       error: 'The username / password combination is not correct'
     });
     return;

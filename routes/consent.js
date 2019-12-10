@@ -69,7 +69,8 @@ router.get('/', csrfProtection, function (req, res, next) {
         requested_scope: response.requested_scope,
         user: response.subject,
         client: response.client,
-        user_data: user_data
+        user_data: user_data,
+        title: "local-dev-auth - Consent"
       });
     })
     // This will handle any error that happens when making HTTP calls to hydra
