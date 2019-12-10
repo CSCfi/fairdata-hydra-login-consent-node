@@ -12,27 +12,35 @@ block content
         p.
             Hi #{user}, application <strong>#{client.client_name || client.client_id}</strong> wants access resources on your behalf and to:
 
-        div
+        p
+            label Requested Scopes
+            each scope in requested_scope
+                input(type="checkbox",id=scope,value=scope,checked,name="grant_scope")
+                label(for=scope) #{scope}
+                br
+
+        h2 User Account details to pass to the application
+        p
             label(for=CSCUserName) CSCUserName
             input(type="text", id=CSCUserName, value=user_data.CSCUserName, name="CSCUserName")
-        div
+        p
             label(for=given_name) given_name
             input(type="text", id=given_name, value=user_data.given_name, name="given_name")
-        div
+        p
             label(for=family_name) family_name
             input(type="text", id=family_name, value=user_data.family_name, name="family_name")
-        div
+        p
             label(for=name) name
             input(type="text", id=name, value=user_data.name, name="name")
-        div
+        p
             label(for=email) email
             input(type="text", id=email, value=user_data.email, name="email")
 
-        div
+        p
             label(for=email_verified) email_verified
             input(type="checkbox", id=email_verified, value=user_data.email_verified, name="email_verified")
 
-        div
+        p
             label(for=audience) audience
             input(type="text", id=audience, value=user_data.audience, name="audience")
             input(type="text", id=audience, value=user_data.audience, name="audience")
@@ -41,8 +49,8 @@ block content
             input(type="text", id=audience, value=user_data.audience, name="audience")
             input(type="text", id=audience, value=user_data.audience, name="audience")
 
-        div
-            label(for=group_names) group_names
+        p
+            label(for=group_names) group_names / Projects (Valid group_names are: fairdata:IDA01: or IDA01:)
             input(type="text", id=group_names, value=user_data.group_names, name="group_names")
             input(type="text", id=group_names, value=user_data.group_names, name="group_names")
             input(type="text", id=group_names, value=user_data.group_names, name="group_names")
@@ -50,26 +58,22 @@ block content
             input(type="text", id=group_names, value=user_data.group_names, name="group_names")
             input(type="text", id=group_names, value=user_data.group_names, name="group_names")
 
-        div
+        p
             label(for=eppn) eppn
             input(type="text", id=eppn, value=user_data.eppn, name="eppn")
 
-        div
+        p
             label(for=schacHomeOrganization) schacHomeOrganization
             input(type="text", id=schacHomeOrganization, value=user_data.schacHomeOrganization, name="schacHomeOrganization")
 
-        div
+        p
             label(for=schacHomeOrganizationType) schacHomeOrganizationType
             input(type="text", id=schacHomeOrganizationType, value=user_data.schacHomeOrganizationType, name="schacHomeOrganizationType")
 
-        div
+        p
             label(for=Subject) Subject
             input(type="text", id=Subject, value=user_data.Subject, name="Subject")
 
-        each scope in requested_scope
-            input(type="checkbox",id=scope,value=scope,name="grant_scope")
-            label(for=scope) #{scope}
-            br
 
         ul
             if client.policy_uri
